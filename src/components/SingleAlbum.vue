@@ -15,7 +15,7 @@ export default {
 
 <style lang="scss" scoped>
     div {
-        height: 370px;
+        height: 350px;
         width: 17%;
         background-color: #2e3a46;
         text-align: center;
@@ -30,9 +30,11 @@ export default {
         }
 
         h4 {
+            padding: 0 10px;
+            font-size: 22px;
             color: white;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         p {
