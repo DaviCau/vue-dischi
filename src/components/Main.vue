@@ -1,13 +1,13 @@
 <template>
-    <div class="main">
-        <select id="type" @change="filterAlbums($event)">
+    <main class="d-flex flex-column align-items-center">
+        <!-- <select id="type" @change="filterAlbums($event)">
             <option value="">All</option>
             <option v-for="(genre, index) in genres" :key="index" :value="genre">{{genre}}</option>
-        </select>
-        <div class="albums_container">
-            <SingleAlbum v-for="(album, index) in albumsFiltered" :key="index" :item="album" />
+        </select> -->
+        <div class="disc_container d-flex justify-content-between align-content-center flex-wrap container">
+            <SingleAlbum v-for="(album, index) in filteredAlbums" :key="index" :item="album" />
         </div>
-    </div>
+    </main>
 </template>
 
 <script>
@@ -16,6 +16,9 @@ import axios from "axios";
 
 export default {
     name: "Main",
+    props: {
+        selectedGenre: String
+    },
     components: {
         SingleAlbum
     },
@@ -27,55 +30,58 @@ export default {
             genres: []
         }
     },
-    methods:{
-        filterAlbums: function(event) {
-            const value = event.target.value;
-            console.log(value);
+    // methods:{
+    //     filterAlbums: function(event) {
+    //         const value = event.target.value;
+    //         console.log(value);
 
-            this.albumsFiltered = this.albums.filter(
-                (element) => element.genre.includes(value)
-            );
-        }
-    },
+    //         this.albumsFiltered = this.albums.filter(
+    //             (element) => element.genre.includes(value)
+    //         );
+    //     }
+    // },
     created: function() {
         axios
             .get(this.apiUrl)
             .then((response) => {
                     this.albums = response.data.response;
-                    console.log(this.albums);
+                    // console.log(this.albums);
 
                     this.albums.forEach(element => {
                         if(!this.genres.includes(element.genre)) {
                             this.genres.push(element.genre);
                         }
                     });
-                    this.albumsFiltered = this.albums;
+                    // this.albumsFiltered = this.albums;
+                    this.$emit("genresReady", this.genres)
                }
             )
-    } 
+    },
+    computed: {
+        filteredAlbums: function() {
+            if (this.selectedGenre == "") {
+                return this.albums;
+            }
+
+            return this.albums.filter(
+                (element) => element.genre.includes(this.selectedGenre)
+            );
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-    .main {
+    main {
         height: calc(100vh - 70px);
         background-color: #1e2d3b;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
 
         select {
             margin-top: 20px;
         }
 
-        .albums_container {
+        .disc_container {
             height: calc(100vh - 70px);
-            width: 60%;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-content: center;
-            flex-wrap: wrap;
         }
     }
 </style>

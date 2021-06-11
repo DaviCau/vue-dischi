@@ -1,25 +1,34 @@
 <template>
-    <div class="logo">
+    <header class="d-flex align-items-center justify-content-between px-4">
         <img src="../assets/img/spotify.png">
-    </div>
+        <select id="type" v-model="selectedGenre" @change="$emit('changedGenre', selectedGenre)">
+            <option value="">All</option>
+            <option v-for="(genre, index) in genres" :key="index" :value="genre">{{genre}}</option>
+        </select>
+    </header>
 </template>
 
 <script>
 export default {
-    name: "Header"
+    name: "Header",
+    props: {
+        "genres": Array
+    },
+    data: function() {
+        return {
+            selectedGenre: ""
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-    .logo {
+    header {
         height: 70px;
         background-color: #2e3a46;
-        display: flex;
-        align-items: center;
 
         img {
             height: 50px;
-            margin-left: 20px;
         }
     }
 </style>

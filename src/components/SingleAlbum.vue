@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="d-flex flex-column align-items-center text-center">
         <img :src="item.poster" :alt="item.poster">
-        <h4>{{item.title}}</h4>
+        <h4 class="text-uppercase">{{item.title}}</h4>
         <p><span class="author">{{item.author}}</span><br><span class="year">{{item.year}}</span></p>
     </div>
 </template>
@@ -15,14 +15,10 @@ export default {
 
 <style lang="scss" scoped>
     div {
-        height: 350px;
-        width: 17%;
+        height: 380px;
+        width: calc(100% / 5 - 20px);
         background-color: #2e3a46;
-        text-align: center;
-        margin: 10px 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        margin: calc(25px / 2) 0;
 
         img {
             width: 80%;
@@ -33,7 +29,6 @@ export default {
             padding: 0 10px;
             font-size: 22px;
             color: white;
-            text-transform: uppercase;
             margin-bottom: 10px;
         }
 
